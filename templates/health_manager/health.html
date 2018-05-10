@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Health Manager</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+  <body>
+    <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197">
+  <ul class="nav navbar-nav">
+    <li class="active"><a href="{%url 'index'%}">Home</a></li>
+    <li><a href="{%url 'health'%}">Health</a></li>
+    <li><a href="{%url 'index'%}">Back Home</a></li>
+  </ul>
+</nav>
+
+<!-- -->
+    <div class="container">
+      <div class="jumbotron">
+        <h1>Health Manager</h1>
+      </div>
+    </div>
+
+    <div class="container">
+      <form method="POST">
+        {{form.as_p}}
+        {%csrf_token%}
+        <input type="submit" class='btn btn-primary' value="Submit">
+      </form>
+
+    </div>
+
+
+
+    <div class="container">
+      <h2>Weight Records</h2>
+      <input class="form-control" id="myInput" type="text" placeholder="Search..">
+      <br>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <th>Date</th>
+            <th>Weight in LB</th>
+          </thead>
+          <tbody id="weights_table">
+            {%for w in weights%}
+            <tr>
+              <td>{{w.datetime}}</td>
+              <td>{{w.lb}}</td>
+            </tr>
+            {%endfor%}
+          </tbody>
+
+        </table>
+    </div>
+
+
+  </body>
+</html>
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#weights_table tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
