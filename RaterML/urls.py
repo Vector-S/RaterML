@@ -18,9 +18,10 @@ from django.urls import path
 from main_app import views
 from django.conf.urls import include
 
+
 urlpatterns = [
-    path('',views.index),
     path('admin/', admin.site.urls),
+    path('',views.index,name='index'),
     path('main_app/',include('main_app.urls')),
     path('health_manager/',include('health_manager.urls'))
 ]
